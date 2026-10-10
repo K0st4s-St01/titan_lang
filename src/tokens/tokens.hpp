@@ -153,8 +153,8 @@ public:
                      OperatorKind kind);
   Token nextPunctuation(Titan::loc::SourceRange range, std::string lexeme,
                         PunctuationKind kind);
-  Token nextInvalid(Titan::loc::SourceRange, std::string lexeme);
-  Token nextEof();
+  Token nextInvalid(Titan::loc::SourceRange range, std::string lexeme);
+  Token nextEof(loc::SourceRange);
 };
 } // namespace Tokens
 } // namespace Titan
