@@ -282,6 +282,28 @@ std::string Titan::Tokens::Token::to_string() {
     case PrimitiveKind::BOOL:
       os << "BOOL";
       break;
+    case PrimitiveKind::VOID:
+      os << "VOID";
+      break;
+    case PrimitiveKind::I8:
+      os << "I8";
+      break;
+    case PrimitiveKind::U8:
+      os << "U8";
+      break;
+    case PrimitiveKind::U16:
+      os << "U16";
+      break;
+    case PrimitiveKind::F32:
+      os << "F32";
+      break;
+    case PrimitiveKind::F64:
+      os << "F64";
+      break;
+    case PrimitiveKind::F128:
+      os << "F128";
+      break;
+      break;
     }
     break;
   }
