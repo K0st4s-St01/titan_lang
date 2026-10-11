@@ -345,5 +345,9 @@ Token TokenBuilder::nextEof(loc::SourceRange range) {
   return Token(TokenKind::END_OF_FILE, range, "<EOF>", std::nullopt,
                std::nullopt, std::nullopt, std::nullopt, std::nullopt);
 }
+Token TokenBuilder::nextIdentifier(loc::SourceRange range, std::string lexeme) {
+  return Token(TokenKind::IDENTIFIER, range, std::move(lexeme), std::nullopt,
+               std::nullopt, std::nullopt, std::nullopt, std::nullopt);
+}
 } // namespace Tokens
 } // namespace Titan

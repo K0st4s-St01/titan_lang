@@ -11,7 +11,8 @@ enum class TokenKind {
   PUNCTUATION,
   OPERATOR,
   LITERAL,
-  PRIMITIVE_TYPE
+  PRIMITIVE_TYPE,
+  IDENTIFIER
 };
 
 enum class KeywordKind {
@@ -161,6 +162,7 @@ public:
   Token nextPunctuation(Titan::loc::SourceRange range, std::string lexeme,
                         PunctuationKind kind);
   Token nextInvalid(Titan::loc::SourceRange range, std::string lexeme);
+  Token nextIdentifier(loc::SourceRange range,std::string lexme);
   Token nextEof(loc::SourceRange);
 };
 } // namespace Tokens
