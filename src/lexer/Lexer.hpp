@@ -14,7 +14,6 @@ private:
   char peek(std::size_t offset = 0);
   char advance();
   bool match(char c);
-  bool eof(std::size_t offset = 0);
   void skipWhitespaceAndComments();
   bool isHexNum();
   bool isBinNum();
@@ -50,5 +49,6 @@ public:
       : builder(std::move(builder)), source(std::move(source)) {}
 
   Tokens::Token nextToken();
+  bool eof(std::size_t offset = 0);
 };
 } // namespace Titan

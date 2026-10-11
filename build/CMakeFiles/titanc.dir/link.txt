@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/titanc.dir/link.d CMakeFiles/titanc.dir/src/lexer/Lexer.cpp.o CMakeFiles/titanc.dir/src/main.cpp.o CMakeFiles/titanc.dir/src/sources/SourceLocation.cpp.o CMakeFiles/titanc.dir/src/sources/SourceManager.cpp.o CMakeFiles/titanc.dir/src/tokens/tokens.cpp.o -o titanc

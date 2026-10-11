@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/xator/Projects/titan_lang/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

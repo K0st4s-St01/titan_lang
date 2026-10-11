@@ -291,7 +291,7 @@ Tokens::Token Lexer::nextPrimitive(std::string word) {
   const std::size_t start_idx =
       index >= word_length ? index - word_length : index;
   const auto start_loc = loc::SourceLocation(
-      file_index, line, column >= word_length ? column - word_length : column);
+      line, column >= word_length ? column - word_length : column);
   Tokens::PrimitiveKind kind;
   if (word == "VOID") {
     kind = Tokens::PrimitiveKind::VOID;
