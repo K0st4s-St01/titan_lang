@@ -64,6 +64,24 @@ bool Lexer::consumeHex() {
   }
   return i;
 }
+
+bool Lexer::consumeBin() {
+  int i = 0;
+  while ((peek() == '0' || peek() == '1') && !eof()) {
+    advance();
+    i++;
+  }
+  return i;
+}
+
+bool Lexer::consumeDec() {
+  int i = 0;
+  while (std::isdigit(static_cast<unsigned char>(peek())) && !eof()) {
+    advance();
+    i++;
+  }
+  return i;
+}
 Tokens::Token Lexer::nextHexNumber() {
   auto start_loc = current_location();
   std::size_t start_idx = index;
@@ -90,4 +108,117 @@ Tokens::Token Lexer::nextHexNumber() {
   return builder.nextInvalid(current_range(start_loc),
                              source_str(start_idx, index));
 }
+
+Tokens::Token Lexer::nextBinaryNumber() {
+  auto start_loc = current_location();
+  std::size_t start_idx = index;
+  if (isBinNum()) {
+    advance();
+    advance();
+    consumeBin();
+
+    if (peek() == '.') {
+      if (consumeBin())
+        return builder.nextLiteral(current_range(start_loc),
+                                   source_str(start_idx, index),
+                                   Tokens::LiteralKind::FLOAT_NUMBER);
+      else
+        return builder.nextInvalid(current_range(start_loc),
+                                   source_str(start_idx, index));
+    } else {
+      if (consumeBin())
+        return builder.nextLiteral(current_range(start_loc),
+                                   source_str(start_idx, index),
+                                   Tokens::LiteralKind::NUMBER);
+    }
+  }
+  return builder.nextInvalid(current_range(start_loc),
+                             source_str(start_idx, index));
+}
+
+Tokens::Token Lexer::nextDecimalNumber() {
+  auto start_loc = current_location();
+  std::size_t start_idx = index;
+  if (isDecNum()) {
+    advance();
+    advance();
+    consumeDec();
+
+    if (peek() == '.') {
+      if (consumeDec())
+        return builder.nextLiteral(current_range(start_loc),
+                                   source_str(start_idx, index),
+                                   Tokens::LiteralKind::FLOAT_NUMBER);
+      else
+        return builder.nextInvalid(current_range(start_loc),
+                                   source_str(start_idx, index));
+    } else {
+      if (consumeDec())
+        return builder.nextLiteral(current_range(start_loc),
+                                   source_str(start_idx, index),
+                                   Tokens::LiteralKind::NUMBER);
+    }
+  }
+  return builder.nextInvalid(current_range(start_loc),
+                             source_str(start_idx, index));
+}
+Tokens::Token Lexer::nextNumberLiteral() {
+  if (isDecNum()) {
+    return nextDecimalNumber();
+  }
+  if (isHexNum()) {
+    return nextHexNumber();
+  }
+  if (isBinNum()) {
+    return nextBinaryNumber();
+  }
+  return builder.nextInvalid(current_range(current_location()),
+                             source_str(index, index));
+}
+Tokens::Token Lexer::nextCharLiteral() {
+  auto start_loc = current_location();
+  std::size_t start_idx = index;
+  if (peek() == '\'') {
+    while ((std::isalnum(peek()) || peek('\\')) && !eof()) {
+      advance();
+    }
+    if (peek() == '\'') {
+      advance();
+      return builder.nextLiteral(current_range(start_loc),
+                                 source_str(start_idx, index),
+                                 Tokens::LiteralKind::CHAR);
+    } else {
+      return builder.nextInvalid(current_range(start_loc),
+                                 source_str(start_idx, index));
+    }
+  }
+  return builder.nextInvalid(current_range(start_loc),
+                             source_str(start_idx, index));
+}
+
+Tokens::Token Lexer::nextStrLiteral() {
+  {
+    auto start_loc = current_location();
+    std::size_t start_idx = index;
+    if (peek() == '\"') {
+      while ((std::isalnum(peek()) || peek('\\')) && !eof()) {
+        advance();
+      }
+      if (peek() == '\"') {
+        advance();
+        return builder.nextLiteral(current_range(start_loc),
+                                   source_str(start_idx, index),
+                                   Tokens::LiteralKind::STR);
+      } else {
+        return builder.nextInvalid(current_range(start_loc),
+                                   source_str(start_idx, index));
+      }
+    }
+    return builder.nextInvalid(current_range(start_loc),
+                               source_str(start_idx, index));
+  }
+}
+
+
+
 } // namespace Titan

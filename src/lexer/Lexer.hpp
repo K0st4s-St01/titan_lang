@@ -17,6 +17,8 @@ private:
   bool isBinNum();
   bool isDecNum();
   bool consumeHex();
+  bool consumeBin();
+  bool consumeDec();
   Tokens::Token nextHexNumber();
   Tokens::Token nextBinaryNumber();
   Tokens::Token nextDecimalNumber();
